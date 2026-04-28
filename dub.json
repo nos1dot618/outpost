@@ -1,0 +1,9 @@
+{
+  "description": "A minimal HTTP server.",
+  "license": "MIT",
+  "authors": [
+    "Lakshay Chauhan"
+  ],
+  "copyright": "Copyright © 2026, Lakshay Chauhan",
+  "name": "outpost"
+}

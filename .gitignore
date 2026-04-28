@@ -1,0 +1,17 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/outpost
+outpost.so
+outpost.dylib
+outpost.dll
+liboutpost.a
+outpost.a
+outpost.lib
+outpost-test-*
+*.exe
+*.pdb
+*.o
+*.obj
+*.lst
