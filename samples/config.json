@@ -1,0 +1,10 @@
+{
+  "port": 8080,
+  "backlog": 50,
+  "root": "./",
+  "tls": {
+    "enable": false,
+    "certificate-path": "creds/http_server.crt",
+    "private-key-path": "creds/http_server.key"
+  }
+}
