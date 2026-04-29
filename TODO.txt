@@ -1,0 +1,4 @@
+- Actually send the data.
+- HTTP redirect support to HTTPS.
+- Other protocol support: HTTP2, UNIX (socket), QUIC, TCP ...
+- Introduce virtual hosts.

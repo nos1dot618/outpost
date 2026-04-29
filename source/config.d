@@ -18,6 +18,11 @@ class Config
     this.data = parseJSON(readText(filepath));
   }
 
+  this(JSONValue data)
+  {
+    this.data = data;
+  }
+
   T getOrDefault(T)(string path, T defaultValue = T.init)
   {
     auto value = this.get!T(path);
@@ -55,5 +60,14 @@ class Config
         current.type == JSONType.false_ ? nullable(false) : Nullable!T();
     else static if (is(T == JSONValue)) return nullable(current);
     else static assert(false, "Unsupported type for Config.get");
+  }
+
+  JSONValue[] getArray(string path)
+  {
+    auto optionalValue = this.get!JSONValue(path);
+    if (optionalValue.isNull) return [];
+    auto value = optionalValue.get;
+    if (value.type != JSONType.array) return [];
+    return value.array;
   }
 }

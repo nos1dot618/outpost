@@ -16,7 +16,7 @@ class HttpRequestRouter
     routes[path] = handler;
   }
 
-  HttpResponse dispatch(HttpRequest request)
+  HttpResponse dispatch(HttpRequest request) shared
   {
     if (auto handler = request.path in routes) return (*handler)(request);
     return HttpResponse(HttpStatus.NotFound,
