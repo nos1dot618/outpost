@@ -10,6 +10,22 @@ struct HttpResponse
   string[string] headers;
   ubyte[] body_;
 
+  this(HttpStatus status)
+  {
+    this.status = status;
+    // TODO: Support keep-alive connections.
+    this.headers = [HttpHeader.ContentType: "text/plain",
+                    HttpHeader.Connection: "close"];
+    this.body_ = cast(ubyte[]) status.toString();
+  }
+
+  this(HttpStatus status, string[string] headers, ubyte[] body_)
+  {
+    this.status = status;
+    this.headers = headers;
+    this.body_ = body_;
+  }
+
   string toString() const @safe nothrow
   {
     auto result = "HTTP/1.1 " ~ status.toString() ~ " \r\n";

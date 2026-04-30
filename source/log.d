@@ -14,6 +14,12 @@ void info(Args...)(string fmt, Args args)
   else logImplf("INFO", fmt, args);
 }
 
+void note(Args...)(string fmt, Args args)
+{
+  static if (Args.length == 0) logImpl("NOTE", fmt);
+  else logImplf("NOTE", fmt, args);
+}
+
 void error(Args...)(string fmt, Args args)
 {
   static if (Args.length == 0) logImpl("ERROR", fmt);

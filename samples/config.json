@@ -1,5 +1,6 @@
 {
   "root": "./",
+  "route": "/",
   "listeners": [
     {
       "protocol": "http",
