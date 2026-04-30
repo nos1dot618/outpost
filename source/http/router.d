@@ -1,7 +1,6 @@
 module outpost.http.router;
 
 import std.algorithm : startsWith;
-import outpost.http.headers : HttpHeader;
 import outpost.http.request : HttpRequest;
 import outpost.http.response : HttpResponse;
 import outpost.http.statuses : HttpStatus;

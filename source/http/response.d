@@ -1,37 +1,40 @@
 module outpost.http.response;
 
 import std.conv;
-import outpost.http.headers : HttpHeader;
+import headers = outpost.http.headers;
 import outpost.http.statuses : HttpStatus;
 
 struct HttpResponse
 {
   HttpStatus status = HttpStatus.Ok;
-  string[string] headers;
+  headers.HttpHeaders headers_;
   ubyte[] body_;
 
   this(HttpStatus status)
   {
     this.status = status;
+
     // TODO: Support keep-alive connections.
-    this.headers = [HttpHeader.ContentType: "text/plain",
-                    HttpHeader.Connection: "close"];
+    headers.setConnection(this.headers_, headers.ConnectionType.Close);
+    headers.setContentType(this.headers_,
+                           headers.ContentType(headers.MimeType.TextPlain));
+
     this.body_ = cast(ubyte[]) status.toString();
   }
 
-  this(HttpStatus status, string[string] headers, ubyte[] body_)
+  this(HttpStatus status, headers.HttpHeaders headers_, ubyte[] body_)
   {
     this.status = status;
-    this.headers = headers;
+    this.headers_ = headers_;
     this.body_ = body_;
   }
 
-  string toString() const @safe nothrow
+  string toString() const
   {
     auto result = "HTTP/1.1 " ~ status.toString() ~ " \r\n";
-    auto localHeaders = headers.dup;
-    if (HttpHeader.ContentLength !in localHeaders)
-      localHeaders[HttpHeader.ContentLength] = to!string(body_.length);
+    auto localHeaders = headers_.dup;
+    if (!localHeaders.has(headers.HttpHeaderKey.ContentLength))
+      headers.setContentLength(localHeaders, body_.length);
     foreach (k, v; localHeaders) result ~= k ~ ": " ~ v ~ "\r\n";
     result ~= "\r\n";
     result ~= body_;

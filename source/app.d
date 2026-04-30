@@ -1,7 +1,7 @@
 import std.stdio;
 
 import std.file : exists, read;
-import outpost.http.headers : HttpHeader;
+import headers = outpost.http.headers;
 import outpost.http.path_sanitiser : sanitisePath;
 import outpost.http.response : HttpResponse;
 import outpost.http.statuses : HttpStatus;
@@ -31,10 +31,9 @@ int main(string[] args)
       if (!exists(sanitisedPath.get)) return HttpResponse(HttpStatus.NotFound);
 
       auto content = cast(ubyte[]) read(sanitisedPath.get);
-      return HttpResponse(HttpStatus.Ok,
-                          [HttpHeader.ContentType: "application/octet-stream",
-                           HttpHeader.Connection: "close"],
-                          content);
+      headers.HttpHeaders headers_;
+      headers.setConnection(headers_, headers.ConnectionType.Close);
+      return HttpResponse(HttpStatus.Ok, headers_, content);
     });
 
   server.listen();
